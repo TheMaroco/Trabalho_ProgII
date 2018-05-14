@@ -1,0 +1,42 @@
+----- Suite de testes unitários a 9 métodos de myPyGPX -----
+
+----- Testando produceXYdata() -----
+número de pontos = 1254
+milésimo ponto: (-9.224584847688675, 38.65559650585055)
+
+----- Testando _computeSpeedForEachTrackPoint() -----
+speed de um certo ponto: 2.6757724405791157 m/s
+
+----- Testando hidePartOfTrack() -----
+número de pontos no 2º track segment = 515
+um certo ponto no 2º track segment: (38.6592376884073, -9.228272465988994)
+
+----- Testando totalTime() -----
+tempo total = 3789.0 segundos
+
+----- Testando totalDistance() -----
+distância total = 14002.151578823416 metros
+
+----- Testando totalAccumulatedElevation() -----
+desnível positivo acumulado = 317.99997901916504 metros
+
+----- Testando averageSpeed() -----
+ritmo médio = 4.510021166711754 min/km
+velocidade média = 13.303706963252651 km/h
+
+----- Testando Analyse.secondsToHoursMinSec() -----
+0 segundos corresponde a 0:00:00
+1800 segundos corresponde a 0:30:00
+1872 segundos corresponde a 0:31:12
+3789 segundos corresponde a 1:03:09
+309789 segundos corresponde a 86:03:09
+309789.4 segundos corresponde a 86:03:09
+309789.9 segundos corresponde a 86:03:10
+
+----- Testando Analyse.paceDecimalMinutesToMinSec() -----
+ritmo de 4.0 min/km corresponde a 4:00/km
+ritmo de 4.5 min/km corresponde a 4:30/km
+ritmo de 4.9 min/km corresponde a 4:54/km
+ritmo de 4.99 min/km corresponde a 4:59/km
+ritmo de 4.994 min/km corresponde a 5:00/km
+ritmo de 67.3 min/km corresponde a 67:18/km
