@@ -377,7 +377,12 @@ class Track:
           Y corresponds to latitude.
         Ensures: a list of (x,y) pairs of float.
         """
-        pass
+        XYdata = []
+        for seg in self.trackSegList:
+            for point in seg.getPointList(): 
+                XYdata.append((point.getLongitude(), point.getLatitude()))
+        
+        return XYdata
 
     def _computeAccDistanceForEachTrackPoint(self):
         """ Computes the accumulatedDistance attribute of each track point.
