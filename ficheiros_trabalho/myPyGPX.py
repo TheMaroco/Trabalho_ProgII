@@ -466,7 +466,7 @@ class Track:
         Ensures (as a side-effect):
             the attribute is computed for all the track points of self. 
         """
-        pass
+        
 
     def hidePartOfTrack(self, center_lat, center_lon, radius):
         """ Returns a new Track object resulting from deleting points from self.
@@ -490,7 +490,18 @@ class Track:
         Time is in seconds.
         Related: see method Analyse.secondsToHoursMinSec()
         """
-        pass
+#        listTrackSegs = self.trackSegList
+#        listPointLists = listTrackSegs.getPointList()
+#        iniPoint = listPointLists[0][0]
+#        finPoint = listPointLists[len(listTrackSegs)-1][len(listPointLists) -1]
+        iniPoint = self.trackSegList[0].getPointList()[0]
+        finPoint = self.trackSegList[len(self.trackSegList)-1].getPointList()[len(self.trackSegList[len(self.trackSegList)-1].getPointList())-1]
+        
+        ini_t = iniPoint.getTime()
+        fin_t = finPoint.getTime()
+        delta = fin_t.timeInterval(ini_t)
+        return delta
+        
 
     def totalDistance(self):
         """ Returns the total accumulated distance of this track. """
