@@ -374,13 +374,13 @@ class Track:
         along the XY geographical plane.
         Note that:
           X corresponds to longitude;
-          Y corresponds to latitude.
         Ensures: a list of (x,y) pairs of float.
+          Y corresponds to latitude.
         """
-        XYdata = []
-        for seg in self.trackSegList:
-            for point in seg.getPointList(): 
-                XYdata.append((point.getLongitude(), point.getLatitude()))
+        XYdata = []                                                          #Creates List for the (x, y) points
+        for seg in self.trackSegList:                                        #For every segment in the list of track segments
+            for point in seg.getPointList():                                 #For every point in the segment
+                XYdata.append((point.getLongitude(), point.getLatitude()))   #Appends the point to the XYData list as (x = longitude, y = latitude)
         
         return XYdata
 
@@ -466,7 +466,7 @@ class Track:
         Ensures (as a side-effect):
             the attribute is computed for all the track points of self. 
         """
-        
+        pass
 
     def hidePartOfTrack(self, center_lat, center_lon, radius):
         """ Returns a new Track object resulting from deleting points from self.
@@ -480,7 +480,29 @@ class Track:
         Does not keep any track segment which ends up with less than
           2 track points.
         """
-        pass
+
+        #FILTER THE INITAL TRACK
+        center = Point(center_lat, center_lon, 0)           #Creates the center point for the circle
+        listTracksegs = self.trackSegList                   #Gets the list of track segments in self
+        newTrackSegments = []                               #New empty list for the new Track segments
+        for trackseg in listTracksegs:                      #for every track segment in the list of track segments
+            newTrackSeg = ListPoints()                      #Creates new track segment            
+            for point in trackseg.getPointList():           #For every point in the trackseg
+                if center.distance(point) > radius:         #Point is added to the new track segment if it is outside the circle
+                    newTrackSeg.addPoint(point)
+            
+            newTrackSegments.append(newTrackSeg)            #Add the new track segment to the list of track segments
+                    
+
+        #CREATE THE NEW TRACK
+        newTrack = Track()                                  #Instanciantes the new track
+        for segment in newTrackSegments:                    #For every segment in the list of new trackSegments:
+            newTrack.addTrackSeg(segment)                   #Adds it to the new track
+        
+        
+        
+        return newTrack
+        
 
     def totalTime(self):
         """ Returns the total time of this track.
@@ -490,18 +512,18 @@ class Track:
         Time is in seconds.
         Related: see method Analyse.secondsToHoursMinSec()
         """
-#        listTrackSegs = self.trackSegList
-#        listPointLists = listTrackSegs.getPointList()
-#        iniPoint = listPointLists[0][0]
-#        finPoint = listPointLists[len(listTrackSegs)-1][len(listPointLists) -1]
-        iniPoint = self.trackSegList[0].getPointList()[0]
+        #Gets the initial point
+        iniPoint = self.trackSegList[0].getPointList()[0]    
+        #Gets the last point
         finPoint = self.trackSegList[len(self.trackSegList)-1].getPointList()[len(self.trackSegList[len(self.trackSegList)-1].getPointList())-1]
         
+        #Gets time of first point
         ini_t = iniPoint.getTime()
+        #Gets time of last point
         fin_t = finPoint.getTime()
+        #Calculutes the Delta-t
         delta = fin_t.timeInterval(ini_t)
         return delta
-        
 
     def totalDistance(self):
         """ Returns the total accumulated distance of this track. """
