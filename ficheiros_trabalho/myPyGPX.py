@@ -466,7 +466,33 @@ class Track:
         Ensures (as a side-effect):
             the attribute is computed for all the track points of self. 
         """
-        pass
+        firstSegment = True
+        for trackSegment in self.trackSegList:
+                pointList=trackSegment.getPointList()
+                if firstSegment:
+                    previousTime=pointList[0].getTime()
+                    firstSegment=False                   
+                else: #firstSegment=False
+                    previousTime=lastPointPrevTrkSeg.getTime()
+                    currentTime=pointList[0].getTime()
+                    
+                    timeInterval=currentTime.timeInterval(previousTime)
+                    
+                    distanceInterval=abs(pointList[0].distance(lastPointPrevTrkSeg))  ###distanc must be positive
+                    currentSpeed=distanceInterval/timeInterval                        ###time interval is always positive
+                    pointList[0].setSpeed(currentSpeed)
+                    
+                for i in range(1,len(pointList)):
+                    previousTime=pointList[i-1].getTime()
+                    currentTime = pointList[i].getTime()
+                    timeInterval=currentTime.timeInterval(previousTime)
+                    distanceInterval=abs(pointList[i].distance(pointList[i-1]))
+                    currentSpeed= distanceInterval/timeInterval
+                    pointList[i].setSpeed(currentSpeed)
+                lastPointPrevTrkSeg=pointList[-1] 
+        speedSecPoint=self.trackSegList[0].getPointList()[1].getSpeed()                ###the speed of the first track point
+        speedFirstPoint=self.trackSegList[0].getPointList()[0].setSpeed(speedSecPoint) ###is set equal to the speed 
+                                                                                       ###of the second track point
 
     def hidePartOfTrack(self, center_lat, center_lon, radius):
         """ Returns a new Track object resulting from deleting points from self.
@@ -548,7 +574,22 @@ class Track:
         Pace means min/km. It is decimal pace.
         Related: see method Analyse.paceDecimalMinutesToMinSec()
         """
-        pass
+        totalSpeed=0
+        ntotal=0
+        for trackSegment in self.trackSegList:
+            pointList=trackSegment.getPointList()
+            for point in pointList:
+                totalSpeed+=point.getSpeed()
+                ntotal+=1
+            averageSpeed_in_ms=totalSpeed/ntotal              ###average speed in m/s
+            
+        if expressAs=="pace":
+            averageSpeed = (1/averageSpeed_in_ms) * 100/6
+            
+        else: ###expressAs="speed km/h"
+            averageSpeed=averageSpeed_in_ms *(36/10)         ###convert average speed in Km/h
+            
+        return averageSpeed
 
 # ----------------------------------------   
 # Further processing, analysis, statistics
