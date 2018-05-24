@@ -554,8 +554,8 @@ class Track:
     def totalDistance(self):
         """ Returns the total accumulated distance of this track. """
 	self._computeAccDistanceForEachTrackPoint()
-        lasPoint=self.trackSegList[-1].getPointList()[-1]
-        return lasPoint.getAccumulatedDistance()
+        lastPoint=self.trackSegList[-1].getPointList()[-1]
+        return lastPoint.getAccumulatedDistance()
 
     def totalAccumulatedElevation(self):
         """ Returns the total accumulated positive elevation of this track.
