@@ -562,7 +562,9 @@ class Track:
 
         Only considers the positive contributions in elevation differences.
         """
-        pass
+        self._computeAccElevationForEachTrackPoint()
+    	lastPoint=self.trackSegList[-1].getPointList()[-1]
+    	return lastPoint.getAccumulatedElevation()
 
     def averageSpeed(self, expressAs = "pace"):
         """ Returns the average speed of this track.
