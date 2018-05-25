@@ -484,9 +484,6 @@ class Track:
                     pointList[i].setSpeed(currentSpeed)
                 lastPointPrevTrkSeg=pointList[-1]
                 
-        ###speedSecPoint=self.trackSegList[0].getPointList()[1].getSpeed()                ###the speed of the first track point
-        ###speedFirstPoint=self.trackSegList[0].getPointList()[0].setSpeed(speedSecPoint) ###is set equal to the speed 
-                                                                                      	  ###of the second track point
         firstSegPointList=self.trackSegList[0].getPointList()
         speedSecPoint=firstSegPointList[1].getSpeed()
         firstSegPointList[0].setSpeed(speedSecPoint)
