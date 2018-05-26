@@ -651,7 +651,9 @@ class Analyse:
           ss is between 00 and 59, implying rounding to the unit digit;
           mm starts in 0 but is not limited to 60 or 99; it can be e.g. 472.
         """
-        pass
+        mins  = int(paceInDecimalMinutes)
+     	secs =  int((paceInDecimalMinutes % 1) * 60)
+    	return "{}:{}/km".format(mins, secs)
 
 
 # --------
