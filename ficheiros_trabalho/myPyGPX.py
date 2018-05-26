@@ -636,7 +636,10 @@ class Analyse:
           ss is between 00 and 59, implying rounding to the unit digit;
           hh starts in 0 but is not limited to 24 or 99; it can be e.g. 396.
         """
-        pass
+    	hours = timeInSeconds // 3600
+    	mins  = (timeInSeconds % 3600) // 60
+    	secs = timeInSeconds % 60
+    	return "{0}:{1}:{2}".format(hours, mins, secs)
          
     @staticmethod
     def paceDecimalMinutesToMinSec(paceInDecimalMinutes):
