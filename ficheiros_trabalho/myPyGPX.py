@@ -484,7 +484,7 @@ class Track:
                     pointList[i].setSpeed(currentSpeed)
                 lastPointPrevTrkSeg=pointList[-1]
                 
-        firstSegPointList=self.trackSegList[0].getPointList()
+                firstSegPointList=self.trackSegList[0].getPointList()
         speedSecPoint=firstSegPointList[1].getSpeed()
         firstSegPointList[0].setSpeed(speedSecPoint)
 
@@ -547,7 +547,7 @@ class Track:
 
     def totalDistance(self):
         """ Returns the total accumulated distance of this track. """
-	self._computeAccDistanceForEachTrackPoint()
+        self._computeAccDistanceForEachTrackPoint()
         lastPoint=self.trackSegList[-1].getPointList()[-1]
         return lastPoint.getAccumulatedDistance()
 
