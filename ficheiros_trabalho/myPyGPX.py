@@ -557,8 +557,8 @@ class Track:
         Only considers the positive contributions in elevation differences.
         """
         self._computeAccElevationForEachTrackPoint()
-    	lastPoint=self.trackSegList[-1].getPointList()[-1]
-    	return lastPoint.getAccumulatedElevation()
+        lastPoint=self.trackSegList[-1].getPointList()[-1]
+        return lastPoint.getAccumulatedElevation()
 
     def averageSpeed(self, expressAs = "pace"):
         """ Returns the average speed of this track.
@@ -570,18 +570,19 @@ class Track:
         Pace means min/km. It is decimal pace.
         Related: see method Analyse.paceDecimalMinutesToMinSec()
         """
-	totalDistance=self.totalDistance()
-		totalTime=self.totalTime()
+    
+        totalDistance = self.totalDistance()
+        totalTime=self.totalTime()
 
-		averageSpeed=totalDistance/totalTime
+        averageSpeed=totalDistance/totalTime
 
-		if expressAs=="pace":
-		    averageSpeed = (1/averageSpeed) * 100/6
+        if expressAs=="pace":
+            averageSpeed = (1/averageSpeed) * 100/6
 
-		else: ###expressAs="speed km/h"
-		    averageSpeed=averageSpeed *(36/10)         ###convert average speed in Km/h
+        else: ###expressAs="speed km/h"
+            averageSpeed=averageSpeed *(36/10)         ###convert average speed in Km/h
 
-		return averageSpeed
+        return averageSpeed
 
 # ----------------------------------------   
 # Further processing, analysis, statistics
@@ -636,10 +637,23 @@ class Analyse:
           ss is between 00 and 59, implying rounding to the unit digit;
           hh starts in 0 but is not limited to 24 or 99; it can be e.g. 396.
         """
-    	hours = timeInSeconds // 3600
-    	mins  = (timeInSeconds % 3600) // 60
-    	secs = timeInSeconds % 60
-    	return "{0}:{1}:{2}".format(hours, mins, secs)
+        #Converts timeInSeconds to hours, mins and seconds
+        hours = (timeInSeconds // 3600)
+        mins  = (timeInSeconds-(hours*3600))//60
+        secs = round(timeInSeconds-(mins*60)-(hours*3600))
+        
+        #Formats the string
+        hourstr = str(int(hours))
+        minstr = str(int(mins))
+        secstr = str(int(secs))
+        if mins < 10:
+                minstr = "0" + minstr
+        if secs < 10:
+                secstr = "0" + secstr
+                
+       
+
+        return hourstr + ":" + minstr + ":" + secstr
          
     @staticmethod
     def paceDecimalMinutesToMinSec(paceInDecimalMinutes):
@@ -651,9 +665,9 @@ class Analyse:
           ss is between 00 and 59, implying rounding to the unit digit;
           mm starts in 0 but is not limited to 60 or 99; it can be e.g. 472.
         """
-        mins  = int(paceInDecimalMinutes)
-     	secs =  int((paceInDecimalMinutes % 1) * 60)
-    	return "{}:{}/km".format(mins, secs)
+        pace = round(paceInDecimalMinutes, 2)
+        paceTuple = divmod(pace * 60, 60)
+        return "{}:{}/km".format(int(paceTuple[0]), int(paceTuple[1]))
 
 
 # --------
